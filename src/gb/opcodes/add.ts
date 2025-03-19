@@ -12,6 +12,7 @@ export const enum TARGET_ADD {
 
 export class Add {
     addCarry = false;
+    setRegister = true;
 
     exec(cpu: Cpu, target: TARGET_ADD) {
         var { result, value } = this.processResult(cpu, target);
@@ -29,7 +30,6 @@ export class Add {
     }
 
     processResult(cpu: Cpu, target: TARGET_ADD) {
-        // TODO: check if addCarry should be included in value
         const value =
             cpu.registers[target] + (this.addCarry ? cpu.getFlagCarry() : 0);
         const result = cpu.registers.a + value;
@@ -39,7 +39,9 @@ export class Add {
     processTarget(result: number, cpu: Cpu, value: number) {
         const carry = result > 0xff;
         const halfCarry = (cpu.registers.a & 0xf) + (value & 0xf) > 0xf;
-        cpu.setRegister(REGISTER_TYPE.A, result & 0xff);
+        if (this.setRegister) {
+            cpu.setRegister(REGISTER_TYPE.A, result & 0xff);
+        }
         return { carry, halfCarry };
     }
 }
