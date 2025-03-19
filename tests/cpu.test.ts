@@ -55,5 +55,22 @@ describe("Cpu Module", () => {
         expect(cpu.getRegister(REGISTER_TYPE.H)).toBe(0xde);
         expect(cpu.getRegister(REGISTER_TYPE.L)).toBe(0xf0);
     });
+
+    test("test get flag register", () => {
+        const cpu = new Cpu();
+        cpu.setRegister(REGISTER_TYPE.F, 0x50);
+        expect(cpu.getFlagRegister()).toBe(0x50); // 01010000
+        expect(cpu.getFlagZero()).toBe(0);
+        expect(cpu.getFlagSubtract()).toBe(1);
+        expect(cpu.getFlagHalfCarry()).toBe(0);
+        expect(cpu.getFlagCarry()).toBe(1);
+
+        cpu.setRegister(REGISTER_TYPE.F, 0x70);
+        expect(cpu.getFlagRegister()).toBe(0x70); // 01110000
+        expect(cpu.getFlagZero()).toBe(0);
+        expect(cpu.getFlagSubtract()).toBe(1);
+        expect(cpu.getFlagHalfCarry()).toBe(1);
+        expect(cpu.getFlagCarry()).toBe(1);
+    });
 });
 

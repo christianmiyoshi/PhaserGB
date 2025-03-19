@@ -50,6 +50,26 @@ export class Cpu {
         return this.registers[register];
     }
 
+    getFlagRegister() {
+        return this.registers[TYPE_F];
+    }
+
+    getFlagZero() {
+        return (this.getFlagRegister() >> 7) & 1;
+    }
+
+    getFlagSubtract() {
+        return (this.getFlagRegister() >> 6) & 1;
+    }
+
+    getFlagHalfCarry() {
+        return (this.getFlagRegister() >> 5) & 1;
+    }
+
+    getFlagCarry() {
+        return (this.getFlagRegister() >> 4) & 1;
+    }
+
     setRegisterAF(value: number) {
         this.set16BitRegister(REGISTER_TYPE.A, REGISTER_TYPE.F, value);
     }
