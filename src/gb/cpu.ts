@@ -54,6 +54,10 @@ export class Cpu {
         return this.registers[TYPE_F];
     }
 
+    clearAllFlagRegister() {
+        return (this.registers[TYPE_F] = 0);
+    }
+
     setFlagRegister(flag: number) {
         if (flag < 4 || flag > 8) {
             throw new Error("Invalid flag");

@@ -1,16 +1,32 @@
-import { CPU } from "../cpu";
+import { Cpu, REGISTER_TYPE } from "../cpu";
 
-class Add {
-    static exec(cpu: CPU) {
-        const value = cpu.registers[register];
+export const enum TARGET_ADD {
+    A = REGISTER_TYPE.A,
+    B = REGISTER_TYPE.B,
+    C = REGISTER_TYPE.C,
+    D = REGISTER_TYPE.D,
+    E = REGISTER_TYPE.E,
+    H = REGISTER_TYPE.H,
+    L = REGISTER_TYPE.L,
+}
+
+export class Add {
+    exec(cpu: Cpu, target: TARGET_ADD) {
+        const value = cpu.registers[target];
         const result = cpu.registers.a + value;
         const carry = result > 0xff;
         const halfCarry = (cpu.registers.a & 0xf) + (value & 0xf) > 0xf;
-        cpu.registers.a = result & 0xff;
-        cpu.registers.f = 0;
-        if (carry) cpu.registers.f |= Flags.CARRY;
-        if (halfCarry) cpu.registers.f |= Flags.HALF_CARRY;
-        if (cpu.registers.a === 0) cpu.registers.f |= Flags.ZERO;
+        cpu.setRegister(REGISTER_TYPE.A, result & 0xff);
+        cpu.clearAllFlagRegister();
+        if (carry) {
+            cpu.setFlagCarry();
+        }
+        if (halfCarry) {
+            cpu.setFlagHalfCarry();
+        }
+        if (cpu.getRegister(REGISTER_TYPE.A) === 0) {
+            cpu.setFlagZero();
+        }
     }
 }
 
