@@ -1,17 +1,15 @@
 import { describe, expect, test } from "@jest/globals";
 import { Add, TARGET_ADD } from "../../src/gb/opcodes/add";
-import { Xor } from "../../src/gb/opcodes/xor";
+import { Ccf } from "../../src/gb/opcodes/ccf";
 import { AddCarry } from "../../src/gb/opcodes/add_carry";
 import { Cpu, REGISTER_TYPE } from "../../src/gb/cpu";
 
-describe("Test xor opcode", () => {
+describe("Test ccf opcode", () => {
     test("test simple xor", () => {
-        const and = new Xor();
+        const ccf = new Ccf();
         const cpu = new Cpu();
-        cpu.setRegister(REGISTER_TYPE.A, 0x0f);
-        cpu.setRegister(REGISTER_TYPE.B, 0xf3);
-        and.exec(cpu, TARGET_ADD.B);
-        expect(cpu.getRegister(REGISTER_TYPE.A)).toBe(0xfc);
+        ccf.exec(cpu, TARGET_ADD.B);
+        expect(cpu.getFlagCarry()).toBe(1);
     });
 
     // test("test carry", () => {
