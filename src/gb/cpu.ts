@@ -54,6 +54,20 @@ export class Cpu {
         return this.registers[TYPE_F];
     }
 
+    setFlagRegister(flag: number) {
+        if (flag < 4 || flag > 8) {
+            throw new Error("Invalid flag");
+        }
+        this.registers[TYPE_F] |= 1 << flag;
+    }
+
+    clearFlagRegister(flag: number) {
+        if (flag < 4 || flag > 8) {
+            throw new Error("Invalid flag");
+        }
+        this.registers[TYPE_F] &= ~(1 << flag);
+    }
+
     getFlagZero() {
         return (this.getFlagRegister() >> 7) & 1;
     }
@@ -68,6 +82,38 @@ export class Cpu {
 
     getFlagCarry() {
         return (this.getFlagRegister() >> 4) & 1;
+    }
+
+    setFlagZero() {
+        return this.setFlagRegister(7);
+    }
+
+    setFlagSubtract() {
+        return this.setFlagRegister(6);
+    }
+
+    setFlagHalfCarry() {
+        return this.setFlagRegister(5);
+    }
+
+    setFlagCarry() {
+        return this.setFlagRegister(4);
+    }
+
+    clearFlagZero() {
+        return this.clearFlagRegister(7);
+    }
+
+    clearFlagSubtract() {
+        return this.clearFlagRegister(6);
+    }
+
+    clearFlagHalfCarry() {
+        return this.clearFlagRegister(5);
+    }
+
+    clearFlagCarry() {
+        return this.clearFlagRegister(4);
     }
 
     setRegisterAF(value: number) {

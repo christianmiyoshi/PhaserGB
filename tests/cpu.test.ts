@@ -72,5 +72,37 @@ describe("Cpu Module", () => {
         expect(cpu.getFlagHalfCarry()).toBe(1);
         expect(cpu.getFlagCarry()).toBe(1);
     });
+
+    test("test set flag register zero", () => {
+        const cpu = new Cpu();
+        cpu.setFlagZero();
+        expect(cpu.getFlagZero()).toBe(1);
+        cpu.clearFlagZero();
+        expect(cpu.getFlagZero()).toBe(0);
+    });
+
+    test("test set flag register subtract", () => {
+        const cpu = new Cpu();
+        cpu.setFlagSubtract();
+        expect(cpu.getFlagSubtract()).toBe(1);
+        cpu.clearFlagSubtract();
+        expect(cpu.getFlagSubtract()).toBe(0);
+    });
+
+    test("test set flag register half carry", () => {
+        const cpu = new Cpu();
+        cpu.setFlagHalfCarry();
+        expect(cpu.getFlagHalfCarry()).toBe(1);
+        cpu.clearFlagHalfCarry();
+        expect(cpu.getFlagHalfCarry()).toBe(0);
+    });
+
+    test("test set flag register carry", () => {
+        const cpu = new Cpu();
+        cpu.setFlagCarry();
+        expect(cpu.getFlagCarry()).toBe(1);
+        cpu.clearFlagCarry();
+        expect(cpu.getFlagCarry()).toBe(0);
+    });
 });
 
