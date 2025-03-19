@@ -1,5 +1,6 @@
 import { describe, expect, test } from "@jest/globals";
-import { Add, AddCarry, TARGET_ADD } from "../../src/gb/opcodes/add";
+import { Add, TARGET_ADD } from "../../src/gb/opcodes/add";
+import { AddCarry } from "../../src/gb/opcodes/add_carry";
 import { Cpu, REGISTER_TYPE } from "../../src/gb/cpu";
 
 describe("Test add carry opcode", () => {

@@ -21,48 +21,23 @@ export class Add {
         }
 
         const result = cpu.registers.a + value;
+        const { carry, halfCarry } = this.processTarget(result, cpu, value);
+        cpu.clearAllFlagRegister();
+        if (carry) {
+            cpu.setFlagCarry();
+        }
+        if (halfCarry) {
+            cpu.setFlagHalfCarry();
+        }
+        if (cpu.getRegister(REGISTER_TYPE.A) === 0) {
+            cpu.setFlagZero();
+        }
+    }
+
+    processTarget(result: number, cpu: Cpu, value: number) {
         const carry = result > 0xff;
         const halfCarry = (cpu.registers.a & 0xf) + (value & 0xf) > 0xf;
         cpu.setRegister(REGISTER_TYPE.A, result & 0xff);
-        cpu.clearAllFlagRegister();
-        if (carry) {
-            cpu.setFlagCarry();
-        }
-        if (halfCarry) {
-            cpu.setFlagHalfCarry();
-        }
-        if (cpu.getRegister(REGISTER_TYPE.A) === 0) {
-            cpu.setFlagZero();
-        }
+        return { carry, halfCarry };
     }
 }
-
-export class AddHL extends Add {
-    exec(cpu: Cpu, target: TARGET_ADD) {
-        let value = cpu.registers[target];
-
-        if (this.addCarry) {
-            value++;
-        }
-
-        const result = cpu.registers.a + value;
-        const carry = result > 0xff;
-        const halfCarry = (cpu.registers.a & 0xf) + (value & 0xf) > 0xf;
-        cpu.setRegisterHL(result & 0xffff);
-        cpu.clearAllFlagRegister();
-        if (carry) {
-            cpu.setFlagCarry();
-        }
-        if (halfCarry) {
-            cpu.setFlagHalfCarry();
-        }
-        if (cpu.getRegister(REGISTER_TYPE.A) === 0) {
-            cpu.setFlagZero();
-        }
-    }
-}
-
-export class AddCarry extends Add {
-    addCarry = true;
-}
-
