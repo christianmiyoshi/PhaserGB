@@ -10,13 +10,27 @@ export const enum TARGET_ADD {
     L = REGISTER_TYPE.L,
 }
 
+export type TARGET_ADD_TYPE =
+    | REGISTER_TYPE.A
+    | REGISTER_TYPE.B
+    | REGISTER_TYPE.C
+    | REGISTER_TYPE.D
+    | REGISTER_TYPE.E
+    | REGISTER_TYPE.H
+    | REGISTER_TYPE.L;
+
 export class Add {
     addCarry = false;
     setRegister = true;
 
-    exec(cpu: Cpu, target: TARGET_ADD) {
+    exec(cpu: Cpu, target: TARGET_ADD_TYPE) {
         var { result, value } = this.processResult(cpu, target);
-        const { carry, halfCarry } = this.processTarget(result, cpu, value);
+        const { carry, halfCarry } = this.processTarget(
+            result,
+            cpu,
+            value,
+            target
+        );
         cpu.clearAllFlagRegister();
         if (carry) {
             cpu.setFlagCarry();
@@ -29,14 +43,19 @@ export class Add {
         }
     }
 
-    processResult(cpu: Cpu, target: TARGET_ADD) {
+    processResult(cpu: Cpu, target: TARGET_ADD_TYPE) {
         const value =
             cpu.registers[target] + (this.addCarry ? cpu.getFlagCarry() : 0);
         const result = cpu.registers.a + value;
         return { result, value };
     }
 
-    processTarget(result: number, cpu: Cpu, value: number) {
+    processTarget(
+        result: number,
+        cpu: Cpu,
+        value: number,
+        target: TARGET_ADD_TYPE = REGISTER_TYPE.A
+    ) {
         const carry = result > 0xff;
         const halfCarry = (cpu.registers.a & 0xf) + (value & 0xf) > 0xf;
         if (this.setRegister) {

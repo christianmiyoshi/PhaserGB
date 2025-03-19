@@ -10,7 +10,7 @@ describe("Test and opcode", () => {
         const cpu = new Cpu();
         cpu.setRegister(REGISTER_TYPE.A, 0xf1);
         cpu.setRegister(REGISTER_TYPE.B, 0x12);
-        and.exec(cpu, TARGET_ADD.B);
+        and.exec(cpu, REGISTER_TYPE.B);
         expect(cpu.getRegister(REGISTER_TYPE.A)).toBe(0x10);
     });
 
@@ -20,7 +20,7 @@ describe("Test and opcode", () => {
     //     cpu.setRegister(REGISTER_TYPE.A, 0xff);
     //     cpu.setRegister(REGISTER_TYPE.B, 0);
     //     cpu.setFlagCarry();
-    //     add.exec(cpu, TARGET_ADD.B);
+    //     add.exec(cpu, REGISTER_TYPE.B);
     //     expect(cpu.getRegister(REGISTER_TYPE.A)).toBe(0);
     //     expect(cpu.getFlagCarry()).toBe(1);
     // });
@@ -31,7 +31,7 @@ describe("Test and opcode", () => {
     //     cpu.setRegister(REGISTER_TYPE.A, 0xff);
     //     cpu.setRegister(REGISTER_TYPE.B, 0);
     //     cpu.setFlagCarry();
-    //     add.exec(cpu, TARGET_ADD.B);
+    //     add.exec(cpu, REGISTER_TYPE.B);
     //     expect(cpu.getRegister(REGISTER_TYPE.A)).toBe(0);
     //     expect(cpu.getFlagZero()).toBe(1);
     // });
@@ -42,7 +42,7 @@ describe("Test and opcode", () => {
     //     cpu.setRegister(REGISTER_TYPE.A, 0xf);
     //     cpu.setRegister(REGISTER_TYPE.B, 0x0);
     //     cpu.setFlagCarry();
-    //     add.exec(cpu, TARGET_ADD.B);
+    //     add.exec(cpu, REGISTER_TYPE.B);
     //     expect(cpu.getFlagHalfCarry()).toBe(1);
     // });
 });

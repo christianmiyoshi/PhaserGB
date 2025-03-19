@@ -10,7 +10,7 @@ describe("Test add carry opcode", () => {
         cpu.setRegister(REGISTER_TYPE.A, 1);
         cpu.setRegister(REGISTER_TYPE.B, 2);
         cpu.setFlagCarry();
-        add.exec(cpu, TARGET_ADD.B);
+        add.exec(cpu, REGISTER_TYPE.B);
         expect(cpu.getRegister(REGISTER_TYPE.A)).toBe(4);
     });
 
@@ -20,7 +20,7 @@ describe("Test add carry opcode", () => {
         cpu.setRegister(REGISTER_TYPE.A, 0xff);
         cpu.setRegister(REGISTER_TYPE.B, 0);
         cpu.setFlagCarry();
-        add.exec(cpu, TARGET_ADD.B);
+        add.exec(cpu, REGISTER_TYPE.B);
         expect(cpu.getRegister(REGISTER_TYPE.A)).toBe(0);
         expect(cpu.getFlagCarry()).toBe(1);
     });
@@ -31,7 +31,7 @@ describe("Test add carry opcode", () => {
         cpu.setRegister(REGISTER_TYPE.A, 0xff);
         cpu.setRegister(REGISTER_TYPE.B, 0);
         cpu.setFlagCarry();
-        add.exec(cpu, TARGET_ADD.B);
+        add.exec(cpu, REGISTER_TYPE.B);
         expect(cpu.getRegister(REGISTER_TYPE.A)).toBe(0);
         expect(cpu.getFlagZero()).toBe(1);
     });
@@ -42,7 +42,7 @@ describe("Test add carry opcode", () => {
         cpu.setRegister(REGISTER_TYPE.A, 0xf);
         cpu.setRegister(REGISTER_TYPE.B, 0x0);
         cpu.setFlagCarry();
-        add.exec(cpu, TARGET_ADD.B);
+        add.exec(cpu, REGISTER_TYPE.B);
         expect(cpu.getFlagHalfCarry()).toBe(1);
     });
 });

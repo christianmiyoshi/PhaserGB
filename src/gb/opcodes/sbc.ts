@@ -1,9 +1,9 @@
 import { Cpu, REGISTER_TYPE } from "../cpu";
-import { Add, TARGET_ADD } from "./add";
+import { Add, TARGET_ADD, TARGET_ADD_TYPE } from "./add";
 
 export class Sbc extends Add {
     addCarry = true;
-    processResult(cpu: Cpu, target: TARGET_ADD) {
+    processResult(cpu: Cpu, target: TARGET_ADD_TYPE) {
         const value = cpu.registers[target];
         let result =
             cpu.getRegister(REGISTER_TYPE.A) -
