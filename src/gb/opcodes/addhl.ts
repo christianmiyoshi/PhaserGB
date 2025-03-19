@@ -1,4 +1,4 @@
-import { Cpu, REGISTER_TYPE } from "../cpu";
+import { Cpu } from "../cpu";
 import { Add } from "./add";
 
 export class AddHL extends Add {

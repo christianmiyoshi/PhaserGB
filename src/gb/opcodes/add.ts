@@ -14,13 +14,7 @@ export class Add {
     addCarry = false;
 
     exec(cpu: Cpu, target: TARGET_ADD) {
-        let value = cpu.registers[target];
-
-        if (this.addCarry) {
-            value++;
-        }
-
-        const result = cpu.registers.a + value;
+        var { result, value } = this.processResult(cpu, target);
         const { carry, halfCarry } = this.processTarget(result, cpu, value);
         cpu.clearAllFlagRegister();
         if (carry) {
@@ -34,6 +28,14 @@ export class Add {
         }
     }
 
+    processResult(cpu: Cpu, target: TARGET_ADD) {
+        // TODO: check if addCarry should be included in value
+        const value =
+            cpu.registers[target] + (this.addCarry ? cpu.getFlagCarry() : 0);
+        const result = cpu.registers.a + value;
+        return { result, value };
+    }
+
     processTarget(result: number, cpu: Cpu, value: number) {
         const carry = result > 0xff;
         const halfCarry = (cpu.registers.a & 0xf) + (value & 0xf) > 0xf;
@@ -41,3 +43,4 @@ export class Add {
         return { carry, halfCarry };
     }
 }
+
